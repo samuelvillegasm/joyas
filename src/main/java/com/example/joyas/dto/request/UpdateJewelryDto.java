@@ -11,7 +11,6 @@ public record UpdateJewelryDto(
         @Positive
         Double weight,
         String specification,
-        Boolean hasStone,
-        Boolean isAvailableForSale
+        Boolean hasStone
 ) {
 }

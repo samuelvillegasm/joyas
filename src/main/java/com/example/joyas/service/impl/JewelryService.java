@@ -47,7 +47,8 @@ public class JewelryService implements IJewelryService {
         Optional<Jewelry> jewelry = this.iJewelryRepository.findById(id);
         if(jewelry.isEmpty())
             throw new NotFoundException("jewelry not found");
-        this.iJewelryRepository.delete(jewelry.get());
+        jewelry.get().setIsAvailableForSale(false);
+        this.iJewelryRepository.save(jewelry.get());
         return new MessageDto("Jewelry deleted successfully");
     }
 
@@ -67,8 +68,6 @@ public class JewelryService implements IJewelryService {
             jewelryToUpdate.setSpecification(updateJewelryDto.specification());
         if(updateJewelryDto.hasStone() != null)
             jewelryToUpdate.setHasStone(updateJewelryDto.hasStone());
-        if(updateJewelryDto.isAvailableForSale() != null)
-            jewelryToUpdate.setIsAvailableForSale(updateJewelryDto.isAvailableForSale());
         this.iJewelryRepository.save(jewelryToUpdate);
         return this.objectMapper.convertValue(jewelryToUpdate, ListJewelryDto.class);
     }
